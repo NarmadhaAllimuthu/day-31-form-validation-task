@@ -58,7 +58,7 @@ const navigate = useNavigate()
         dispatch(addAuthorList(authorData.data))
         formik.handleReset()
         alert("Author Added Successfully" )
-        navigate("/")
+        navigate("/home")
         console.log(authorData.data)
 
       } catch (error) {

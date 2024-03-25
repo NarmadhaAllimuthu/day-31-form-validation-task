@@ -87,7 +87,7 @@ function BookForm() {
         setCheckSubmittion(true);
         formik.handleReset();
         handleAlert();
-        navigate("/")
+        navigate("/home")
 
       } catch (error) {
         alert("Something went wrong !")

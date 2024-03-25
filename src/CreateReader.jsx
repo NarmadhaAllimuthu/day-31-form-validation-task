@@ -60,7 +60,7 @@ function CreateReader() {
                     }
                 });
                 alert("reader created  successfully !");
-                navigate("/");
+                navigate("/book-list");
                 formik.handleReset();
 
                 console.log(readerCreatedData.data)
