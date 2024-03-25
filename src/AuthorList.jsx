@@ -19,7 +19,7 @@ function AuthorList() {
 
   const getData = async () => {
     try {
-      const apiData = await axios.get("http://localhost:4001/authors/getAllAuthor",{
+      const apiData = await axios.get("https://library-backend-1-2hr6.onrender.com//authors/getAllAuthor",{
         headers:{
           "Authorization":localStorage.getItem("token")
         }

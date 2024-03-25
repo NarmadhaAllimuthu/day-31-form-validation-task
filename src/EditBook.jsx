@@ -14,7 +14,7 @@ function EditBook() {
 const navigate =useNavigate()
     const getEditingData = async () => {
         try {
-            const getData = await axios.get(`http://localhost:4001/books/getBookToEdit/${params.id}`,{
+            const getData = await axios.get(`https://library-backend-1-2hr6.onrender.com//books/getBookToEdit/${params.id}`,{
                 headers: {
                     "Authorization":localStorage.getItem("token")
                 }
@@ -106,7 +106,7 @@ const navigate =useNavigate()
         },
         onSubmit: async (values) => {
             try {
-                const upDateApiData = await axios.put(`http://localhost:4001/books/editbook/${params.id}`, values,{
+                const upDateApiData = await axios.put(`https://library-backend-1-2hr6.onrender.com//books/editbook/${params.id}`, values,{
                     headers: {
                         'Authorization':localStorage.getItem("token")
                     }
