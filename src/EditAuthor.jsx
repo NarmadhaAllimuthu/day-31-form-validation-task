@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { React } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -12,6 +13,7 @@ function EditAuthor() {
     const params = useParams();
 
     const [state, setState] = useState();
+    const navigate = useNavigate();
 
     //dispatch method for action 
     const dispatch = useDispatch()
@@ -24,9 +26,25 @@ function EditAuthor() {
     //getting data for which the user click for edit
     const getEditingData = async () => {
         try {
-            const getData = await axios.get(`https://655b68dbab37729791a90eb0.mockapi.io/damyapi/details/${params.id}`)
+            const getData = await axios.get(`http://localhost:4001/authors/getAuthorToEdit/${params.id}`,{
+                headers: {
+                    "Authorization":localStorage.getItem("token")
+                }
+            })
             setState(getData.data)
-            formik.setValues(getData.data)
+            // console.log(getData.data)
+            {
+                getData.data.map((item) => {
+                    formik.setValues({
+                        authorName: item.authorName,
+                        dob: item.dob,
+                        description: item.description
+                    })
+
+                }
+                )
+            }
+
         } catch (error) {
             console.log("error")
         }
@@ -41,7 +59,7 @@ function EditAuthor() {
     const formik = useFormik({
         initialValues: {
 
-            authorname: "",
+            authorName: "",
             dob: "",
             description: ""
         },
@@ -50,8 +68,8 @@ function EditAuthor() {
             let errors = {}
 
 
-            if (!values.authorname) {
-                errors.authorname = "Please Enter Author Name"
+            if (!values.authorName) {
+                errors.authorName = "Please Enter Author Name"
             }
 
             if (!values.dob) {
@@ -66,10 +84,16 @@ function EditAuthor() {
 
         onSubmit: async (values) => {
             try {
-                const upDateApiData = await axios.put(`https://655b68dbab37729791a90eb0.mockapi.io/damyapi/details/${params.id}`, values);
+                const upDateApiData = await axios.put(`http://localhost:4001/authors/editAuthor/${params.id}`, values,{
+                    headers: {
+                        "Authorization":localStorage.getItem("token")
+                    }
+                });
                 dispatch(editAuthorList(upDateApiData.data));
                 formik.setValues(upDateApiData.data);
                 setState(upDateApiData.data);
+                alert("Updated Successfully");
+                navigate("/");
 
                 // Dispatch an action to update the local state
 
@@ -99,16 +123,16 @@ function EditAuthor() {
                             <div className="col-lg-8 mb-3">
                                 <label className='label'>Author Name : </label>
 
-                                <input type="text" name="authorname"
-                                    value={formik.values.authorname}
+                                <input type="text" name="authorName"
+                                    value={formik.values.authorName}
                                     onChange={formik.handleChange}
                                     className="form-control mt-3"
                                     placeholder='Name'
                                     onBlur={formik.handleBlur} />
 
-                                {(formik.getFieldMeta("authorname").touched && formik.errors.authorname) ?
+                                {(formik.getFieldMeta("authorName").touched && formik.errors.authorName) ?
 
-                                    <span style={{ color: "red" }}>{formik.errors.authorname}</span> : null
+                                    <span style={{ color: "red" }}>{formik.errors.authorName}</span> : null
 
                                 }
 

@@ -24,16 +24,16 @@ export const bookSlice = createSlice({
         },
         deleteBookFromList: (state, action) => {
             const getId = action.payload;
-            state.books = state.books.filter((user) => user.id != getId)
+            state.books = state.books.filter((user) => user._id != getId)
 
         }, viewBookList: (state, action) => {
             const viewUser = action.payload;
-            state.selectedUser = state.books.find((user) => user.id == viewUser)
+            state.selectedUser = state.books.find((user) => user._id == viewUser)
         },
         editBookList: (state, action) => {
             const editedUser = action.payload;
             state.books = state.books.map((user) =>
-                user.id === editedUser.id ? editedUser : user
+                user.id === editedUser._id ? editedUser : user
             )
 
         },
@@ -43,11 +43,11 @@ export const bookSlice = createSlice({
 
         deleteAuthorFromList: (state, action) => {
             const getId = action.payload;
-            state.author = state.author.filter((user) => user.authorid != getId)
+            state.author = state.author.filter((user) => user._id != getId)
 
         }, viewAuthorList: (state, action) => {
             const viewUser = action.payload;
-            state.selectedUser = state.author.find((user) => user.authorid == viewUser)
+            state.selectedUser = state.author.find((user) => user._id == viewUser)
         },
         editAuthorList: (state, action) => {
             const editedUser = action.payload;

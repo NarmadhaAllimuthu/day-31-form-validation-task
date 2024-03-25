@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addAuthorList } from './reducer/BookSlice';
 import Footer from './Footer';
+import { useNavigate } from 'react-router-dom';
 
 function AuthorForm() {
 
@@ -11,14 +12,14 @@ function AuthorForm() {
 
   const dispatch = useDispatch()
   const data = useSelector((state) => state.app)
-
+const navigate = useNavigate()
   //for formik validation we use useformik to control the whole form
 
   const formik = useFormik({
     initialValues: {
 
       // here we get the form values by same name and intially empty
-      authorname: "",
+      authorName: "",
       dob: "",
       description: ""
     },
@@ -31,8 +32,8 @@ function AuthorForm() {
       let errors = {}
 
 
-      if (!values.authorname) {
-        errors.authorname = "Please Enter Author Name"
+      if (!values.authorName) {
+        errors.authorName = "Please Enter Author Name"
       }
 
       if (!values.dob) {
@@ -49,12 +50,19 @@ function AuthorForm() {
       //on submit it will proceess the data and create a object in api
 
       try {
-        const authorData = await axios.post("https://655b68dbab37729791a90eb0.mockapi.io/damyapi/details", values)
+        const authorData = await axios.post("http://localhost:4001/authors/createAuthor", values,{
+          headers:{
+            "Authorization":localStorage.getItem("token")
+          }
+        })
         dispatch(addAuthorList(authorData.data))
         formik.handleReset()
+        alert("Author Added Successfully" )
+        navigate("/")
         console.log(authorData.data)
 
       } catch (error) {
+        alert("Something went wrong !" )
         console.log("error", error);
       }
     }
@@ -83,7 +91,7 @@ function AuthorForm() {
 
                 <input className='form-control'
                   type='text'
-                  name="authorname"
+                  name="authorName"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur} >
 
@@ -91,8 +99,8 @@ function AuthorForm() {
 
                 {/* here we first check where the user touched the input field or not if the input is touched and it has error then it show the error message */}
 
-                {(formik.getFieldMeta("authorname").touched && formik.errors.authorname)
-                  ? <span style={{ color: "red" }}>{formik.errors.authorname}</span> : null}
+                {(formik.getFieldMeta("authorName").touched && formik.errors.authorName)
+                  ? <span style={{ color: "red" }}>{formik.errors.authorName}</span> : null}
 
               </div>
 

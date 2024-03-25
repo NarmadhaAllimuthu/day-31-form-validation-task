@@ -18,7 +18,11 @@ function BookList() {
 
   const getData = async () => {
     try {
-      const apiData = await axios.get("https://655b68dbab37729791a90eb0.mockapi.io/damyapi/book")
+      const apiData = await axios.get("http://localhost:4001/books/getAllBooks",{
+        headers: {
+          Authorization: localStorage.getItem("token")
+        }
+      })
       dispatch(setBooks(apiData.data))
     } catch (error) {
       console.log(error)
@@ -59,11 +63,11 @@ function BookList() {
             <table className="table table-striped mt-2 mb-5 p-3">
               <thead>
                 <tr >
-                  <th scope="col">No.</th>
+                  {/* <th scope="col">No.</th> */}
                   <th scope="col">Book Name</th>
                   <th scope="col">Author Name</th>
                   <th scope="col"> ISBN number</th>
-                  <th scope='col'>Image</th>
+                  {/* <th scope='col'>Image</th> */}
 
                   <th scope="col">Published Date </th>
                   <th scope='col'>Action</th>
@@ -73,36 +77,39 @@ function BookList() {
               </thead>
               <tbody>
                 {data.books.map((item) => {
-                  return <tr key={item.id} >
+                  return <tr key={item._id} >
 
-                    <td>
+                    {/* <td>
                       {item.id}
+                    </td> */}
+                    <td>
+                      {item.bookTitle}
                     </td>
                     <td>
-                      {item.title}
-                    </td>
-                    <td>
-                      {item.authorname}
-                    </td>
-
-                    <td>
-                      {item.booknumber}
-                    </td>
-                    <td>
-                      <img src={item.bookimg} className='img table-img' />
-                    </td>
-                    <td>
-                      {item.publishdate}
+                      {item.authorName}
                     </td>
 
                     <td>
-                      <Link to="/view-book" onClick={() => { handleViewUser(item.id) }}><button className='btn btn-info mt-4'>View</button></Link>
+                      {item.bookNumber}
+                    </td>
+                    {/* <td>
+                      <img src={item.bookImg} className='img table-img' />
+                    </td> */}
+                    <td>
+                      {item.publishDate}
+                    </td>
+
+                    <td>
+                      <Link to="/view-book" onClick={() => { handleViewUser(item._id) }}>
+                        <button className='btn btn-info mt-4'>View</button></Link>
                     </td>
                     <td>
-                      <Link to={`/edit-book/${item.id}`}><button className='btn btn-warning mt-4'>Edit</button></Link>
+                      <Link to={`/edit-book/${item._id}`}>
+                        <button className='btn btn-warning mt-4'>Edit</button></Link>
                     </td>
                     <td>
-                      <button className='btn btn-danger mt-4' onClick={() => { handleDeleteUser(item.id) }}>Delete</button>
+                      <button className='btn btn-danger mt-4' 
+                      onClick={() => { handleDeleteUser(item._id) }}>Delete</button>
                     </td>
 
                   </tr>

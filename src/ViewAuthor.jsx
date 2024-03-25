@@ -11,7 +11,7 @@ function ViewAuthor() {
       
 
       <h5 className='heading-content'>Author Name :
-        <span className='span-email-content ml-4'> {selectedUser.authorname}</span>
+        <span className='span-email-content ml-4'> {selectedUser.authorName}</span>
       </h5>
 
      

@@ -5,18 +5,19 @@ import { Link } from 'react-router-dom'
 function Home() {
   return (
     <>
+     
       <div className='container-fluid home-container'>
         <div className='row text-center '>
           <h1 className='heading mt-5 mb-3'>Our Library System</h1>
           <p className='text-muted'>keep your book save and updated with us!!!</p>
         </div>
         <hr />
-        <div className='row mt-4 mb-5 align-items-center justify-content-center'>
-          <div className='col-md-4'>
-            <div class="card text-center ms-5" style={{ width: "18rem" }}>
-              <div class="card-body ">
+        <div className='row mt-4 mb-5  align-items-center justify-content-center'>
+          <div className='col-md-4 '>
+            <div class="card text-center ms-5 " style={{ width: "18rem" }}>
+              <div class="card-body card-item ">
                 <Link to="/book-form" ><h5 class="card-title mb-3">Add Books</h5></Link>
-                <h6 class="card-subtitle mb-2 text-body-secondary mb-4">become a member by adding book</h6>
+                <h6 class="card-subtitle mb-2 text-body-secondary mb-4 f-4">become a member by adding book</h6>
                 <p class="card-text mb-5"> Share books with adding here and simple to add books by filling forms and updating here </p>
               </div>
             </div>

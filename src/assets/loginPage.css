@@ -1,0 +1,99 @@
+
+
+
+.login-page {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #f6f5f7;
+    font-family: "monserrat", sans-serif;
+    min-height: 100vh;
+    max-width: 200%;
+    width: 100%;
+    height: 100%;
+    background-color: slateblue;
+}
+
+
+
+.login-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+
+    overflow: hidden;
+    background-image: url("https://img.freepik.com/premium-vector/abstract-element-light-background-digital-tech_991099-10.jpg");
+    background-size: cover;
+    background-position: fixed;
+    /* background-color: mediumslateblue; */
+
+}
+
+
+.h4,.h5,.h1{
+    color: black;
+    letter-spacing: 1px;
+    word-spacing: 1px;
+}
+
+/* .btn-user{
+ background-color: turquoise ;
+} */
+
+.small{
+    letter-spacing: 1px;
+    word-spacing: 2px;
+}
+
+
+
+.card {
+    max-width: 700px;
+    border-radius: 20px;
+    /* background-color: transparent; */
+    background-color: rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+    position: relative;
+}
+
+.card::before {
+    content: "";
+    background-image: url(https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg);
+    /* background-image: url("https://img.freepik.com/premium-vector/abstract-element-light-background-digital-tech_991099-10.jpg"); */
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    filter: blur(10px); 
+    z-index: -1;
+}
+
+
+hr{
+    background-color: black;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

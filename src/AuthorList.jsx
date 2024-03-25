@@ -19,7 +19,12 @@ function AuthorList() {
 
   const getData = async () => {
     try {
-      const apiData = await axios.get("https://655b68dbab37729791a90eb0.mockapi.io/damyapi/details")
+      const apiData = await axios.get("http://localhost:4001/authors/getAllAuthor",{
+        headers:{
+          "Authorization":localStorage.getItem("token")
+        }
+      })
+      console.log(apiData.data)
       dispatch(setAuthors(apiData.data))
     } catch (error) {
       console.log(error)
@@ -61,7 +66,7 @@ function AuthorList() {
             <table className="table table-striped mt-2 mb-5 p-3">
               <thead>
                 <tr >
-                  <th scope="col">No.</th>
+                  {/* <th scope="col">No.</th> */}
 
                   <th scope="col">Author Name </th>
                   <th scope="col"> Date Of Birth </th>
@@ -75,14 +80,14 @@ function AuthorList() {
               </thead>
               <tbody>
                 {data.author.map((item) => {
-                  return <tr key={item.authorid} >
+                  return <tr key={item._id} >
 
-                    <td>
+                    {/* <td>
                       {item.authorid}
-                    </td>
+                    </td> */}
 
                     <td>
-                      {item.authorname}
+                      {item.authorName}
                     </td>
 
                     <td>
@@ -94,13 +99,13 @@ function AuthorList() {
                     </td>
 
                     <td>
-                      <Link to="/view-author" onClick={() => { handleViewUser(item.authorid) }}><button className='btn btn-info mt-4'>View</button></Link>
+                      <Link to="/view-author" onClick={() => { handleViewUser(item._id) }}><button className='btn btn-info mt-4'>View</button></Link>
                     </td>
                     <td>
-                      <Link to={`/edit-author/${item.authorid}`}><button className='btn btn-warning mt-4'>Edit</button></Link>
+                      <Link to={`/edit-author/${item._id}`}><button className='btn btn-warning mt-4'>Edit</button></Link>
                     </td>
                     <td>
-                      <button className='btn btn-danger mt-4' onClick={() => { handleDeleteUser(item.authorid) }}>Delete</button>
+                      <button className='btn btn-danger mt-4' onClick={() => { handleDeleteUser(item._id) }}>Delete</button>
                     </td>
 
                   </tr>

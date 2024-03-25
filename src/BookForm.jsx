@@ -6,32 +6,43 @@ import { useFormik } from 'formik';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addBookList } from './reducer/BookSlice';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AuthorForm from './AuthorForm';
 import Footer from './Footer';
-
-
+import Swal from 'sweetalert2';
 
 
 
 
 function BookForm() {
 
-  const [checkSubmittion, setCheckSubmittion] = useState(false)
+  const [checkSubmittion, setCheckSubmittion] = useState(false);
+
+
 
   const dispatch = useDispatch()
   const data = useSelector((state) => state.app)
+  const navigate = useNavigate()
+  const handleAlert = () => {
+    Swal.fire({
+      // position: "top-end",
+      icon: "success",
+      title: "Your book has been created and saved successfully!",
+      showConfirmButton: false,
+      timer: 2000
+    });
+  }
 
   //for formik validation we use useformik to control the whole form
 
   const formik = useFormik({
     initialValues: {
       // here we get the form values by same name and intially empty
-      title: "",
-      authorname: "",
-      booknumber: "",
-      publishdate: "",
-      bookimg: ''
+      bookTitle: "",
+      authorName: "",
+      bookNumber: "",
+      publishDate: "",
+      bookImg: ''
     },
     validate: (values) => {
 
@@ -40,23 +51,23 @@ function BookForm() {
       //no error error then only form procced to submit
       let errors = {}
 
-      if (!values.title) {
-        errors.title = "Please Enter Book Title"
-      } else if (values.title.length > 15) {
-        errors.title = "Book Title should be within 15 characters"
+      if (!values.bookTitle) {
+        errors.bookTitle = "Please Enter Book bookTitle"
+      } else if (values.bookTitle.length > 15) {
+        errors.bookTitle = "Book bookTitle should be within 15 characters"
       }
-      if (!values.authorname) {
-        errors.authorname = "Please Enter Author Name"
+      if (!values.authorName) {
+        errors.authorName = "Please Enter Author Name"
       }
 
-      if (!values.publishdate) {
-        errors.publishdate = "Required *"
+      if (!values.publishDate) {
+        errors.publishDate = "Required *"
       }
-      if (!values.booknumber) {
-        errors.booknumber = "Required *"
+      if (!values.bookNumber) {
+        errors.bookNumber = "Required *"
       }
-      if (!values.bookimg) {
-        errors.bookimg = "Required *"
+      if (!values.bookImg) {
+        errors.bookImg = "Required *"
       }
 
       return errors;
@@ -64,14 +75,23 @@ function BookForm() {
     onSubmit: async (values) => {
       //on submit it will proceess the data and create a object in api
       try {
-        const bookData = await axios.post("https://655b68dbab37729791a90eb0.mockapi.io/damyapi/book", values)
+        const bookData = await axios.post(`http://localhost:4001/books/createBooks`, values,
+          {
+            headers: {
+            
+              'Authorization':  localStorage.getItem("token")
+          }
+        }
+        )
         dispatch(addBookList(bookData.data))
         setCheckSubmittion(true);
-        formik.handleReset()
-        console.log(bookData.data)
+        formik.handleReset();
+        handleAlert();
+        navigate("/")
 
       } catch (error) {
-        console.log("error");
+        alert("Something went wrong !")
+        console.log("error", error);
       }
 
     }
@@ -100,14 +120,14 @@ function BookForm() {
             <form onSubmit={formik.handleSubmit} >
               <div className='row mt-2'>
                 <div className='col-md-8'>
-                  <label className='label' >Book Title : </label>
+                  <label className='label' >Book bookTitle : </label>
 
                   {/* input box value is crtly find by the name that we gave in intialvalue and name in input field should be same */}
 
 
                   <input className='form-control mt-3'
                     type='text'
-                    name="title"
+                    name="bookTitle"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     placeholder='To Kill a Mockingbird'>
@@ -116,8 +136,8 @@ function BookForm() {
                   {/* here we first check where the user touched the input field or not if the input is touched and it has error then it show the error message */}
 
 
-                  {(formik.getFieldMeta("title").touched && formik.errors.title)
-                    ? <span style={{ color: "red" }}>{formik.errors.title}</span> : null}
+                  {(formik.getFieldMeta("bookTitle").touched && formik.errors.bookTitle)
+                    ? <span style={{ color: "red" }}>{formik.errors.bookTitle}</span> : null}
 
                 </div>
 
@@ -129,7 +149,7 @@ function BookForm() {
 
                   <input className='form-control mt-3'
                     type='text'
-                    name="authorname"
+                    name="authorName"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     placeholder='Harper Lee'>
@@ -138,8 +158,8 @@ function BookForm() {
 
                   {/* here we first check where the user touched the input field or not if the input is touched and it has error then it show the error message */}
 
-                  {(formik.getFieldMeta("authorname").touched && formik.errors.authorname)
-                    ? <span style={{ color: "red" }}>{formik.errors.authorname}</span> : null}
+                  {(formik.getFieldMeta("authorName").touched && formik.errors.authorName)
+                    ? <span style={{ color: "red" }}>{formik.errors.authorName}</span> : null}
 
 
                 </div>
@@ -152,7 +172,7 @@ function BookForm() {
 
                   <input className='form-control mt-3'
                     type='text'
-                    name="booknumber"
+                    name="bookNumber"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     placeholder='978-3-16-148410-0'>
@@ -160,8 +180,8 @@ function BookForm() {
                   </input>
                   {/* here we first check where the user touched the input field or not if the input is touched and it has error then it show the error message */}
 
-                  {(formik.getFieldMeta("booknumber").touched && formik.errors.booknumber)
-                    ? <span style={{ color: "red" }}>{formik.errors.booknumber}</span> : null}
+                  {(formik.getFieldMeta("bookNumber").touched && formik.errors.bookNumber)
+                    ? <span style={{ color: "red" }}>{formik.errors.bookNumber}</span> : null}
                 </div>
 
               </div>
@@ -172,7 +192,7 @@ function BookForm() {
 
                   <input className='form-control mt-3'
                     type='url'
-                    name="bookimg"
+                    name="bookImg"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     placeholder='www.imgurl'>
@@ -180,8 +200,8 @@ function BookForm() {
                   </input>
                   {/* here we first check where the user touched the input field or not if the input is touched and it has error then it show the error message */}
 
-                  {(formik.getFieldMeta("bookimg").touched && formik.errors.bookimg)
-                    ? <span style={{ color: "red" }}>{formik.errors.bookimg}</span> : null}
+                  {(formik.getFieldMeta("bookImg").touched && formik.errors.bookImg)
+                    ? <span style={{ color: "red" }}>{formik.errors.bookImg}</span> : null}
                 </div>
 
               </div>
@@ -192,7 +212,7 @@ function BookForm() {
 
                   <input className='form-control mt-3'
                     type='date'
-                    name="publishdate"
+                    name="publishDate"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur} >
 
@@ -200,8 +220,8 @@ function BookForm() {
                   {/* here we first check where the user touched the input field or not if the input is touched and it has error then it show the error message */}
 
 
-                  {(formik.getFieldMeta("publishdate").touched && formik.errors.publishdate)
-                    ? <span style={{ color: "red" }}>{formik.errors.publishdate}</span> : null}
+                  {(formik.getFieldMeta("publishDate").touched && formik.errors.publishDate)
+                    ? <span style={{ color: "red" }}>{formik.errors.publishDate}</span> : null}
 
                 </div>
 
