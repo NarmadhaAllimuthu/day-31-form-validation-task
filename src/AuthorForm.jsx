@@ -50,7 +50,7 @@ const navigate = useNavigate()
       //on submit it will proceess the data and create a object in api
 
       try {
-        const authorData = await axios.post("https://library-backend-1-2hr6.onrender.com//authors/createAuthor", values,{
+        const authorData = await axios.post("https://library-backend-1-2hr6.onrender.com/authors/createAuthor", values,{
           headers:{
             "Authorization":localStorage.getItem("token")
           }

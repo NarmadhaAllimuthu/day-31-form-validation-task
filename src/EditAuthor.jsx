@@ -26,7 +26,7 @@ function EditAuthor() {
     //getting data for which the user click for edit
     const getEditingData = async () => {
         try {
-            const getData = await axios.get(`https://library-backend-1-2hr6.onrender.com//authors/getAuthorToEdit/${params.id}`,{
+            const getData = await axios.get(`https://library-backend-1-2hr6.onrender.com/authors/getAuthorToEdit/${params.id}`,{
                 headers: {
                     "Authorization":localStorage.getItem("token")
                 }
@@ -84,7 +84,7 @@ function EditAuthor() {
 
         onSubmit: async (values) => {
             try {
-                const upDateApiData = await axios.put(`https://library-backend-1-2hr6.onrender.com//authors/editAuthor/${params.id}`, values,{
+                const upDateApiData = await axios.put(`https://library-backend-1-2hr6.onrender.com/authors/editAuthor/${params.id}`, values,{
                     headers: {
                         "Authorization":localStorage.getItem("token")
                     }
